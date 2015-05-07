@@ -1,4 +1,4 @@
-# Dokku [![Build Status](https://circleci.com/gh/progrium/dokku/tree/master.svg?style=svg&circle-token=eec5b442dda53a4d229911dd97d4214853acc262 "Build Status")](https://circleci.com/gh/progrium/dokku/tree/master) [![Ubuntu Package](https://img.shields.io/badge/package-ubuntu-brightgreen.svg?style=flat-square "Ubuntu Package")](https://packagecloud.io/dokku/dokku) [![IRC Network](https://img.shields.io/badge/irc-freenode-blue.svg "IRC Freenode")](https://webchat.freenode.net/?channels=dokku)
+# Dokku [![Build Status](https://img.shields.io/circleci/project/progrium/dokku.svg "Build Status")](https://circleci.com/gh/progrium/dokku/tree/master) [![Ubuntu Package](https://img.shields.io/badge/package-ubuntu-brightgreen.svg?style=flat-square "Ubuntu Package")](https://packagecloud.io/dokku/dokku) [![IRC Network](https://img.shields.io/badge/irc-freenode-blue.svg "IRC Freenode")](https://webchat.freenode.net/?channels=dokku) [![Documentation](https://img.shields.io/badge/docs-viewdocs-blue.svg "Viewdocs")](http://progrium.viewdocs.io/dokku/index)
 
 Docker powered mini-Heroku. The smallest PaaS implementation you've ever seen. Sponsored by our friends at [Deis](http://deis.io/).
 
@@ -24,6 +24,12 @@ Full documentation - including advanced installation docs - are available online
 ## Support
 
 You can use [Github Issues](https://github.com/progrium/dokku/issues), check [Troubleshooting](http://progrium.viewdocs.io/dokku/troubleshooting) in the documentation, or join us on [freenode in #dokku](https://webchat.freenode.net/?channels=%23dokku)
+
+## Contribution
+
+After checking [Github Issues](https://github.com/progrium/dokku/issues), the [Troubleshooting Guide](http://progrium.viewdocs.io/dokku/troubleshooting) or having a chat with us on [freenode in #dokku](https://webchat.freenode.net/?channels=%23dokku), feel free to fork and create a Pull Request.
+
+While we may not merge your PR as is, they serve to start conversations and improve the general dokku experience for all users.
 
 ## Sponsors
 
