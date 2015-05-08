@@ -11,7 +11,7 @@ case "$1" in
 
     case "$IMAGE_SOURCE_TYPE" in
       buildstep)
-        id=$(tar -c . | docker run -i -a stdin $DOKKU_IMAGE /bin/bash -c "mkdir -p /app && tar -xC /app")
+        id=$(tar -c . | docker run -i -a stdin $DOKKU_IMAGE /bin/buildapp.sh)
         test "$(docker wait $id)" -eq 0
         docker commit $id $IMAGE > /dev/null
         [[ -d $CACHE_DIR ]] || mkdir $CACHE_DIR
