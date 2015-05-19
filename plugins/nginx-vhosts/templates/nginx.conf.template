@@ -15,3 +15,4 @@ server {
   }
   include $DOKKU_ROOT/$APP/nginx.conf.d/*.conf;
 }
+include $DOKKU_ROOT/$APP/upstream.conf

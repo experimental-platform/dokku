@@ -61,6 +61,8 @@ EOF
       fi
 
       NGINX_CONF=$(mktemp -t "nginx.conf.XXXXXX")
+      UPSTREAM_CONF=$(mktemp -t "upstream.conf.XXXXXX")
+
       SCHEME="http"
       if [[ -n "$SSL_INUSE" ]]; then
         SCHEME="https"
@@ -97,11 +99,12 @@ EOF
       fi
 
       if [[ -n "$DOKKU_APP_LISTEN_PORT" ]] && [[ -n "$DOKKU_APP_LISTEN_IP" ]]; then
-        echo "upstream $APP { server $DOKKU_APP_LISTEN_IP:$DOKKU_APP_LISTEN_PORT; }" >> $NGINX_CONF
+        echo "upstream $APP { server $DOKKU_APP_LISTEN_IP:$DOKKU_APP_LISTEN_PORT; }" > $UPSTREAM_CONF
       fi
 
       dokku_log_info1 "Creating $SCHEME nginx.conf"
       mv $NGINX_CONF "$DOKKU_ROOT/$APP/nginx.conf"
+      mv $UPSTREAM_CONF "$DOKKU_ROOT/$APP/upstream.conf"
 
       if [[ -n "$DOKKU_APP_LISTEN_PORT" ]] && [[ -n "$DOKKU_APP_LISTEN_IP" ]]; then
         dokku_log_info1 "Running nginx-pre-reload"
