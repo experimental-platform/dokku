@@ -115,7 +115,7 @@ EOF
         restart_nginx
       fi
 
-      urls=$(: | pluginhook generate-urls $APP)
+      urls=$(: | pluginhook generate-urls "${APP}" "${SSL_VHOSTS}" "${NONSSL_VHOSTS}")
       if [[ ! -n $urls ]]; then
         urls+=$(xargs -i echo "https://{}" <<< "${SSL_VHOSTS}")
         urls+=$(xargs -i echo "http://{}" <<< "${NONSSL_VHOSTS}")
