@@ -124,7 +124,7 @@ EOF
         pluginhook nginx-pre-reload $APP $DOKKU_APP_LISTEN_PORT $DOKKU_APP_LISTEN_IP
 
         dokku_log_verbose "Reloading nginx"
-        validate_nginx && restart_nginx
+        (validate_nginx && restart_nginx) || (rm $DOKKU_ROOT/$APP/{nginx,upstream}.conf && exit 1)
       fi
 
       urls=$(: | pluginhook generate-urls "${APP}" "${SSL_VHOSTS}" "${NONSSL_VHOSTS}")
