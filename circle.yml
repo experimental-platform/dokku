@@ -11,3 +11,13 @@ dependencies:
 test:
   override:
     - ./tests/ci/parallel_runner.sh testing: { parallel: true, timeout: 1800 }
+
+deployment:
+  master:
+    branch: master
+    commands:
+      - >
+        curl
+        --header "Content-Type: application/json"
+        --request POST
+        https://circleci.com/api/v1/project/experimental-platform/platform-dokku/tree/development?circle-token=$CIRCLE_TOKEN
