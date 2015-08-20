@@ -102,6 +102,11 @@ if [[ ! -z $DOKKU_HOST ]]; then
       if [[ ! "$1" =~ --* ]]; then
         verb=$1
         shift
+        
+        if [[ "$1" == "$appname" ]]; then
+          shift
+        fi
+        
         args="$*"
       else
         long_args="--"
@@ -119,7 +124,7 @@ if [[ ! -z $DOKKU_HOST ]]; then
     ssh -t "dokku@$DOKKU_HOST" $long_args "$verb" "$appname" "${args[@]}"
   }
 
-  if [[ "$0" == "dokku" ]] || [[ "$0" == *dokku_client.sh ]]; then
+  if [[ "$0" == "dokku" ]] || [[ "$0" == *dokku_client.sh ]] || [[ "$0" == $(which dokku) ]]; then
     _dokku "$@"
     exit $?
   fi

@@ -3,9 +3,10 @@
 If you create your own plugin:
 
 1. Take a look at the plugins shipped with dokku and hack away!
-2. Upload your plugin to github with a repository name in form of `dokku-<name>` (e.g. `dokku-mariadb`)
-3. Edit [this page](http://progrium.viewdocs.io/dokku/plugins) and add a link to it.
-4. Subscribe to the [dokku development blog](http://progrium.com) to be notified about API changes and releases
+2. Check out the [list of hooks](http://progrium.viewdocs.io/dokku/development/pluginhooks) your plugin can implement.
+3. Upload your plugin to github with a repository name in form of `dokku-<name>` (e.g. `dokku-mariadb`)
+4. Edit [this page](http://progrium.viewdocs.io/dokku/plugins) and add a link to it.
+5. Subscribe to the [dokku development blog](http://progrium.com) to be notified about API changes and releases
 
 ### Sample plugin
 
@@ -31,8 +32,8 @@ case "$1" in
 
   help)
     cat && cat<<EOF
-    hello <app>                                     Says "Hello <app>"
-    hello:world                                     Says "Hello world"
+    hello <app>, Says "Hello <app>"
+    hello:world, Says "Hello world"
 EOF
     ;;
 
@@ -47,7 +48,7 @@ A few notes:
 
 - You should always support `DOKKU_TRACE` as specified on the 2nd line of the plugin.
 - If your command requires that an application exists, ensure you check for it's existence in the manner prescribed above.
-- A `help` command is required, though it is allowed to be empty.
+- A `help` command is required, though it is allowed to be empty. Also, the command syntax will need to separated by `, ` in order to maintain columnar output alignment.
 - Commands *should* be namespaced.
 - As of 0.3.3, a catch-all should be implemented which exits with a `DOKKU_NOT_IMPLEMENTED_EXIT` code. This allows dokku to output a `command not found` message.
 - Be sure you want the "set -eo pipefail" option. Look at the following example :

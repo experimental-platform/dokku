@@ -5,16 +5,27 @@
 # If installing a tag higher than 0.3.13, it may install dokku via a package (so long as the package is higher than 0.3.13)
 # It checks out the dokku source code from Github into ~/dokku and then runs 'make install' from dokku source.
 
+# We wrap this whole script in a function, so that we won't execute
+# until the entire script is downloaded.
+# That's good because it prevents our output overlapping with curl's.
+# It also means that we can't run a partially downloaded script.
+
+
+bootstrap () {
+
+
 set -eo pipefail
 export DEBIAN_FRONTEND=noninteractive
 export DOKKU_REPO=${DOKKU_REPO:-"https://github.com/progrium/dokku.git"}
 
+echo "Preparing to install $DOKKU_TAG from $DOKKU_REPO..."
 if ! command -v apt-get &>/dev/null; then
   echo "This installation script requires apt-get. For manual installation instructions, consult http://progrium.viewdocs.io/dokku/advanced-installation ."
   exit 1
 fi
 
 apt-get update
+which curl > /dev/null || apt-get install -qq -y curl
 [[ $(lsb_release -sr) == "12.04" ]] && apt-get install -qq -y python-software-properties
 
 dokku_install_source() {
@@ -31,19 +42,19 @@ dokku_install_source() {
 }
 
 dokku_install_package() {
-  curl --silent https://get.docker.io/gpg 2> /dev/null | apt-key add - > /dev/null 2>&1
-  curl --silent https://packagecloud.io/gpg.key 2> /dev/null | apt-key add - > /dev/null 2>&1
+  curl -sSL https://get.docker.io/gpg | apt-key add -
+  curl -sSL https://packagecloud.io/gpg.key | apt-key add -
 
-  echo "deb http://get.docker.io/ubuntu docker main" > /etc/apt/sources.list.d/docker.list
+  echo "deb https://get.docker.io/ubuntu docker main" > /etc/apt/sources.list.d/docker.list
   echo "deb https://packagecloud.io/dokku/dokku/ubuntu/ trusty main" > /etc/apt/sources.list.d/dokku.list
 
-  sudo apt-get update > /dev/null
-  sudo apt-get install -qq -y apt-transport-https
+  apt-get update > /dev/null
+  apt-get install -qq -y "linux-image-extra-$(uname -r)" apt-transport-https
 
   if [[ -n $DOKKU_CHECKOUT ]]; then
-    sudo apt-get install -qq -y dokku=$DOKKU_CHECKOUT
+    apt-get install -qq -y dokku=$DOKKU_CHECKOUT
   else
-    sudo apt-get install -qq -y dokku
+    apt-get install -qq -y dokku
   fi
 }
 
@@ -67,3 +78,7 @@ elif [[ -n $DOKKU_TAG ]]; then
 else
   dokku_install_package
 fi
+
+}
+
+bootstrap

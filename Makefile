@@ -3,7 +3,7 @@ DOKKU_VERSION = master
 SSHCOMMAND_URL ?= https://raw.github.com/progrium/sshcommand/master/sshcommand
 PLUGINHOOK_URL ?= https://s3.amazonaws.com/progrium-pluginhook/pluginhook_0.1.0_amd64.deb
 STACK_URL ?= https://github.com/progrium/buildstep.git
-PREBUILT_STACK_URL ?= https://github.com/progrium/buildstep/releases/download/2014-12-16/2014-12-16_42bd9f4aab.tar.gz
+PREBUILT_STACK_URL ?= https://github.com/progrium/buildstep/releases/download/2015-07-14/2015-07-14_1afb78e747.tar.gz
 PLUGINS_PATH ?= /var/lib/dokku/plugins
 
 # If the first argument is "vagrant-dokku"...
@@ -86,15 +86,17 @@ docker: aufs
 	apt-get install -qq -y curl
 	egrep -i "^docker" /etc/group || groupadd docker
 	usermod -aG docker dokku
+ifndef CI
 	curl -sSL https://get.docker.com/gpg | apt-key add -
-	echo deb http://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list
+	echo deb https://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list
 	apt-get update
 ifdef DOCKER_VERSION
 	apt-get install -qq -y lxc-docker-${DOCKER_VERSION}
 else
-	apt-get install -qq -y lxc-docker
+	apt-get install -qq -y lxc-docker-1.6.2
 endif
 	sleep 2 # give docker a moment i guess
+endif
 
 aufs:
 ifndef CI
