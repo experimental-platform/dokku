@@ -14,7 +14,7 @@ test:
 
 deployment:
   master:
-    branch: master
+    branch: legacy
     commands:
       - >
         curl
