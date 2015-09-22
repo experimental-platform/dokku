@@ -3,8 +3,6 @@ machine:
     - docker
 
 dependencies:
-  cache_directories:
-    - "~/docker"
   override:
     - ./tests/ci/parallel_runner.sh setup: { timeout: 300 }
   post:
