@@ -10,7 +10,7 @@ dependencies:
 
 test:
   override:
-    - ./tests/ci/parallel_runner.sh testing: { parallel: true, timeout: 1800 }
+    - MODE=setup ./tests/ci/parallel_runner.sh testing: { parallel: true, timeout: 1800 }
 
 deployment:
   master:
