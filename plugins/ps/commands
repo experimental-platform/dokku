@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-[[ " ps ps:start ps:stop ps:rebuild ps:rebuildall ps:restart ps:restartall ps:scale help ps:help " == *" $1 "* ]] || exit $DOKKU_NOT_IMPLEMENTED_EXIT
+[[ " ps ps:start ps:stop ps:rebuild ps:rebuildall ps:restart ps:restartall ps:restore ps:scale help ps:help " == *" $1 "* ]] || exit $DOKKU_NOT_IMPLEMENTED_EXIT
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
 source "$PLUGIN_AVAILABLE_PATH/ps/functions"
@@ -41,6 +41,7 @@ case "$1" in
     if [[ -n "$DOKKU_APP_RUNNING_CONTAINER_IDS" ]]; then
       echo "Stopping $APP ..."
       docker stop $DOKKU_APP_RUNNING_CONTAINER_IDS > /dev/null || true
+      plugn trigger post-stop $APP
     else
       echo "App $APP already stopped"
     fi
